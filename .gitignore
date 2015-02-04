@@ -1,0 +1,30 @@
+/.idea
+/.gradle
+/local.properties
+/build
+/app/build
+/example/build
+/library/build
+*.apk
+*.iml
+
+# Eclipse project files
+.classpath
+.project
+/.settings
+
+# OSX files
+.DS_Store
+.DS_Store?
+
+# Windows thumbnail db
+ehthumbs.db
+Thumbs.db
+
+# OS-specific files
+._*
+.Spotlight-V100
+.Trashes
+
+# Log Files
+*.log
