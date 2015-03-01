@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import net.masonliu.statusbarcolor.StatusBarColorUtil;
 
@@ -15,6 +16,7 @@ public class SecondActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
         StatusBarColorUtil.setStatusBarColorResource(this, R.color.red);
+        Toast.makeText(this, "dd", Toast.LENGTH_LONG).show();
     }
 
 

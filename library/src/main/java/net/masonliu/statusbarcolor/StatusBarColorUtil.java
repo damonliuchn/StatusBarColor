@@ -2,12 +2,14 @@ package net.masonliu.statusbarcolor;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 /**
  * Created by liumeng on 2/3/15.
@@ -76,25 +78,26 @@ public class StatusBarColorUtil {
             } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
 
                 Window window = activity.getWindow();
+                window.getDecorView().setFitsSystemWindows(true);
                 window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                         WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 SystemBarTintManager tintManager = new SystemBarTintManager(activity);
                 tintManager.setStatusBarTintEnabled(true);
                 tintManager.setStatusBarTintResource(resource);
-//            final View container = findViewById(android.R.id.content);
-//
-//            if (container != null) {
-//                //container.setFitsSystemWindows(true);
-//                final int statusBarHeight = tintManager.getConfig().getStatusBarHeight();
-//                container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//                    @Override
-//                    public void onGlobalLayout() {
-//                        container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                        container.setPadding(0, statusBarHeight,
-//                                0, 0);
-//                    }
-//                });
-//            }
+                final View container = (View)activity.findViewById(android.R.id.content);
+                container.setFitsSystemWindows(true);
+//                if (container != null) {
+//                    //container.setFitsSystemWindows(true);
+//                    final int statusBarHeight = tintManager.getConfig().getStatusBarHeight();
+//                    container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                        @Override
+//                        public void onGlobalLayout() {
+//                            container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                            container.setPadding(0, statusBarHeight,
+//                                    0, 0);
+//                        }
+//                    });
+//                }
 
             }
         } catch (Exception e) {
@@ -110,5 +113,21 @@ public class StatusBarColorUtil {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             activity.getWindow().setStatusBarColor(activity.getResources().getColor(resource));
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public static Toast showToastWithDrawLayout(Context context, CharSequence text, boolean isLong) {
+        if (context == null) return null;
+        int time = isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, time);
+        try {
+            if (19 <= Build.VERSION.SDK_INT){
+                toast.getView().setFitsSystemWindows(false);
+            }
+            toast.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return toast;
     }
 }
