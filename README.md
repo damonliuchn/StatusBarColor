@@ -8,6 +8,20 @@
 
 <img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/1.png"  width="320" height="480"/>
 
+Usage
+=====
+
+```java
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
+dependencies {
+    compile 'com.github.MasonLiuChn:StatusBarColor:v1.0.0'
+}
+```
 ------
 Blog:http://blog.csdn.net/masonblog
 
