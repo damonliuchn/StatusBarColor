@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,7 @@ public class StatusBarColorUtil {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void setStatusBarColorResource(final ActionBarActivity activity, int resource) {
+    public static void setStatusBarColorResource(final Activity activity, int resource) {
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -91,7 +90,7 @@ public class StatusBarColorUtil {
                 //container.setFitsSystemWindows(true);
                 if (container != null) {
                     //container.setFitsSystemWindows(true);
-                    final int padingTop = checkHaveToolbar(activity)?tintManager.getConfig().getStatusBarHeight():tintManager.getConfig().getStatusBarHeight() + tintManager.getConfig().getActionBarHeight();
+                    final int padingTop = checkHaveToolbar(activity) ? tintManager.getConfig().getStatusBarHeight() : tintManager.getConfig().getStatusBarHeight() + tintManager.getConfig().getActionBarHeight();
                     container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                         @Override
                         public void onGlobalLayout() {
