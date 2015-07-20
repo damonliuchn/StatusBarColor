@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -84,20 +85,19 @@ public class StatusBarColorUtil {
                 SystemBarTintManager tintManager = new SystemBarTintManager(activity);
                 tintManager.setStatusBarTintEnabled(true);
                 tintManager.setStatusBarTintResource(resource);
-                final View container = (View)activity.findViewById(android.R.id.content);
-                container.setFitsSystemWindows(true);
-//                if (container != null) {
-//                    //container.setFitsSystemWindows(true);
-//                    final int statusBarHeight = tintManager.getConfig().getStatusBarHeight();
-//                    container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//                        @Override
-//                        public void onGlobalLayout() {
-//                            container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                            container.setPadding(0, statusBarHeight,
-//                                    0, 0);
-//                        }
-//                    });
-//                }
+                final View container = (View) activity.findViewById(android.R.id.content);
+                //container.setFitsSystemWindows(true);
+                if (container != null) {
+                    //container.setFitsSystemWindows(true);
+                    final int statusBarHeight = tintManager.getConfig().getStatusBarHeight() + tintManager.getConfig().getActionBarHeight();
+                    container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                            container.setPadding(0, statusBarHeight,0, 0);
+                        }
+                    });
+                }
 
             }
         } catch (Exception e) {
@@ -121,7 +121,7 @@ public class StatusBarColorUtil {
         int time = isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, time);
         try {
-            if (19 <= Build.VERSION.SDK_INT){
+            if (19 <= Build.VERSION.SDK_INT) {
                 toast.getView().setFitsSystemWindows(false);
             }
             toast.show();
