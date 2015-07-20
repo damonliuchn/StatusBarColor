@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -55,7 +57,7 @@ public class StatusBarColorUtil {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void setStatusBarColorResource(Activity activity, int resource) {
+    public static void setStatusBarColorResource(final ActionBarActivity activity, int resource) {
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -85,16 +87,16 @@ public class StatusBarColorUtil {
                 SystemBarTintManager tintManager = new SystemBarTintManager(activity);
                 tintManager.setStatusBarTintEnabled(true);
                 tintManager.setStatusBarTintResource(resource);
-                final View container = (View) activity.findViewById(android.R.id.content);
+                final View container = activity.findViewById(android.R.id.content);
                 //container.setFitsSystemWindows(true);
                 if (container != null) {
                     //container.setFitsSystemWindows(true);
-                    final int statusBarHeight = tintManager.getConfig().getStatusBarHeight() + tintManager.getConfig().getActionBarHeight();
+                    final int padingTop = checkHaveToolbar(activity)?tintManager.getConfig().getStatusBarHeight():tintManager.getConfig().getStatusBarHeight() + tintManager.getConfig().getActionBarHeight();
                     container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                         @Override
                         public void onGlobalLayout() {
                             container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                            container.setPadding(0, statusBarHeight,0, 0);
+                            container.setPadding(0, padingTop, 0, 0);
                         }
                     });
                 }
@@ -129,5 +131,20 @@ public class StatusBarColorUtil {
             e.printStackTrace();
         }
         return toast;
+    }
+
+    private static boolean checkHaveToolbar(Activity activity) {
+        //判断是否有Toolbar
+        ViewGroup view = (ViewGroup) activity.findViewById(android.R.id.content);
+        View draw = view.getChildAt(0);
+        if (draw instanceof ViewGroup) {
+            ViewGroup drawerLayout = (ViewGroup) draw;
+            for (int i = 0; i < drawerLayout.getChildCount(); i++) {
+                if (drawerLayout.getChildAt(i) instanceof Toolbar) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

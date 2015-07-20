@@ -22,8 +22,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.home_activity_toolbar);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.home_activity_toolbar);
 
         setSupportActionBar(toolbar);
 
@@ -32,16 +31,15 @@ public class MainActivity extends ActionBarActivity {
         //   and toast use StatusBarColorUtil.showToastWithDrawLayout
         StatusBarColorUtil.setStatusBarColorResource(this, R.color.red);
 
-        TextView www = (TextView)findViewById(R.id.www);
+        TextView www = (TextView) findViewById(R.id.www);
         www.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,SecondActivity.class));
+                startActivity(new Intent(MainActivity.this, SecondActivity.class));
             }
         });
-        StatusBarColorUtil.showToastWithDrawLayout(this,"dd",true);
+        StatusBarColorUtil.showToastWithDrawLayout(this, "dd", true);
     }
-
 
 
     @Override
