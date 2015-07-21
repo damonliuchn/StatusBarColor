@@ -26,11 +26,6 @@ public class MainActivity extends ActionBarActivity {
 
         setSupportActionBar(toolbar);
 
-        //1、if activity have drawlayout ,must after setcontentview
-        //2、if activity have drawlayout ,values-v19 add <item name="android:fitsSystemWindows">true</item>
-        //   and toast use StatusBarColorUtil.showToastWithDrawLayout
-        StatusBarColorUtil.setStatusBarColorResource(this, R.color.red);
-
         TextView www = (TextView) findViewById(R.id.www);
         www.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +36,14 @@ public class MainActivity extends ActionBarActivity {
         StatusBarColorUtil.showToastWithDrawLayout(this, "dd", true);
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        //1、if activity have drawlayout ,must after setcontentview
+        //2、if activity have drawlayout ,values-v19 add <item name="android:fitsSystemWindows">true</item>
+        //   and toast use StatusBarColorUtil.showToastWithDrawLayout
+        StatusBarColorUtil.setStatusBarColorResourceOnPostCreate(this, R.color.red);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

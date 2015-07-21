@@ -15,10 +15,14 @@ public class SecondActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        StatusBarColorUtil.setStatusBarColorResource(this, R.color.red);
         Toast.makeText(this, "dd", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        StatusBarColorUtil.setStatusBarColorResourceOnPostCreate(this, R.color.red);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
