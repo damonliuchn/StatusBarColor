@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.MasonLiuChn:StatusBarColor:v1.0.0'
+    compile 'com.github.MasonLiuChn:StatusBarColor:v1.0.3'
 }
 ```
 ------
