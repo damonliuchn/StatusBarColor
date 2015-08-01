@@ -19,4 +19,6 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="AppTheme.Base.Mason.NoTitle.StatusBarWithDrawLayout"></style>
+
 </resources>

@@ -16,11 +16,14 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-//        Window window = getWindow();
-//        window.setFlags(Window.FEATURE_ACTION_BAR,0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //1、if activity have drawlayout ,must after setcontentview
+        //2、if activity have drawlayout ,values-v19 add <item name="android:fitsSystemWindows">true</item>
+        //   and toast use StatusBarColorUtil.showToastWithDrawLayout
+        StatusBarColorUtil.setStatusBarColorResourceAfterSetContentView(this, R.color.red);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.home_activity_toolbar);
 
@@ -33,16 +36,21 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(new Intent(MainActivity.this, SecondActivity.class));
             }
         });
+        TextView www3 = (TextView) findViewById(R.id.www3);
+        www3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ThirdActivity.class));
+            }
+        });
+        TextView www4 = (TextView) findViewById(R.id.www4);
+        www4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, NoActionBarActivity.class));
+            }
+        });
         StatusBarColorUtil.showToastWithDrawLayout(this, "dd", true);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        //1、if activity have drawlayout ,must after setcontentview
-        //2、if activity have drawlayout ,values-v19 add <item name="android:fitsSystemWindows">true</item>
-        //   and toast use StatusBarColorUtil.showToastWithDrawLayout
-        StatusBarColorUtil.setStatusBarColorResourceOnPostCreate(this, R.color.red);
     }
 
     @Override

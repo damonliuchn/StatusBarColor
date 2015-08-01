@@ -9,19 +9,17 @@ import android.widget.Toast;
 import net.masonliu.statusbarcolor.StatusBarColorUtil;
 
 
-public class SecondActivity extends ActionBarActivity {
+public class NoActionBarActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_noactionbar);
 
         StatusBarColorUtil.setStatusBarColorResourceAfterSetContentView(this, R.color.red);
         StatusBarColorUtil.setNavigationBarColorResourceAfterSetContentView(this, R.color.red);
 
-        Toast.makeText(this, "dd2", Toast.LENGTH_LONG).show();
-
+        Toast.makeText(this, "dd4", Toast.LENGTH_LONG).show();
 
     }
 

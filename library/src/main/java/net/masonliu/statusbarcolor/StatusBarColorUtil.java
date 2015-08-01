@@ -6,13 +6,8 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.app.ToolbarActionBar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -25,12 +20,12 @@ public class StatusBarColorUtil {
     /* StatusBarColor */
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void setStatusBarColorResourceOnPostCreate(final Activity activity, int resource) {
-        setStatusBarColorOnPostCreate(activity, activity.getResources().getColor(resource));
+    public static void setStatusBarColorResourceAfterSetContentView(final Activity activity, int resource) {
+        setStatusBarColorAfterSetContentView(activity, activity.getResources().getColor(resource));
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void setStatusBarColorOnPostCreate(final Activity activity, int color) {
+    public static void setStatusBarColorAfterSetContentView(final Activity activity, int color) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 //判断是否有Drawlayout
@@ -47,22 +42,15 @@ public class StatusBarColorUtil {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         setStatusBarColorResourceFromL(activity, color);
                     } else {
+                        View trueContent = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+                        trueContent.setFitsSystemWindows(true);
+
                         Window window = activity.getWindow();
-                        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
                         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
                         tintManager.setStatusBarTintEnabled(true);
                         tintManager.setStatusBarTintColor(color);
-
-                        final View container = activity.findViewById(android.R.id.content);
-                        container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                final int padingTop = getPaddingTop(activity);
-                                container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                                container.setPadding(0, padingTop, 0, container.getPaddingBottom());
-                            }
-                        });
                     }
                 }
             }
@@ -100,17 +88,20 @@ public class StatusBarColorUtil {
     /* NavigationBarColor */
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void setNavigationBarColorResourceOnPostCreate(final Activity activity, int resource) {
-        setNavigationBarColorOnPostCreate(activity, activity.getResources().getColor(resource));
+    public static void setNavigationBarColorResourceAfterSetContentView(final Activity activity, int resource) {
+        setNavigationBarColorAfterSetContentView(activity, activity.getResources().getColor(resource));
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void setNavigationBarColorOnPostCreate(final Activity activity, int color) {
+    public static void setNavigationBarColorAfterSetContentView(final Activity activity, int color) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     setNavigationBarColorResourceFromL(activity, color);
                 } else {
+                    View trueContent = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+                    trueContent.setFitsSystemWindows(true);
+
                     Window window = activity.getWindow();
                     window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
@@ -120,15 +111,6 @@ public class StatusBarColorUtil {
                     }
                     tintManager.setNavigationBarTintEnabled(true);
                     tintManager.setNavigationBarTintColor(color);
-                    final View container = activity.findViewById(android.R.id.content);
-                    container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                        @Override
-                        public void onGlobalLayout() {
-                            int padingBottom = hasDrawLayout(activity) ? 0 : tintManager.getConfig().getNavigationBarHeight();
-                            container.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                            container.setPadding(0, container.getPaddingTop(), 0, padingBottom);
-                        }
-                    });
                 }
             }
         } catch (Exception e) {
@@ -168,22 +150,6 @@ public class StatusBarColorUtil {
             e.printStackTrace();
         }
         return toast;
-    }
-
-    private static int getPaddingTop(Activity activity) {
-        ActionBar actionBar = null;
-        if (activity instanceof ActionBarActivity) {
-            ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
-            actionBar = actionBarActivity.getSupportActionBar();
-        }
-        if (activity instanceof AppCompatActivity) {
-            AppCompatActivity actionBarActivity = (AppCompatActivity) activity;
-            actionBar = actionBarActivity.getSupportActionBar();
-        }
-        if (actionBar == null || actionBar instanceof ToolbarActionBar) {
-            return getStatusBarHeight(activity);
-        }
-        return getStatusBarHeight(activity) + actionBar.getHeight();
     }
 
     private static int getStatusBarHeight(Context context) {

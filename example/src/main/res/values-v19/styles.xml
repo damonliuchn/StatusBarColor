@@ -1,8 +1,6 @@
 <resources>
 
-    <style name="AppTheme.Base.Mason.NoTitle">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
+    <style name="AppTheme.Base.Mason.NoTitle.StatusBarWithDrawLayout">
         <item name="android:fitsSystemWindows">true</item>
     </style>
 </resources>

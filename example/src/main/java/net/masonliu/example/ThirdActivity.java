@@ -2,6 +2,7 @@ package net.masonliu.example;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -9,19 +10,22 @@ import android.widget.Toast;
 import net.masonliu.statusbarcolor.StatusBarColorUtil;
 
 
-public class SecondActivity extends ActionBarActivity {
+public class ThirdActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_third);
 
-        setContentView(R.layout.activity_second);
 
         StatusBarColorUtil.setStatusBarColorResourceAfterSetContentView(this, R.color.red);
         StatusBarColorUtil.setNavigationBarColorResourceAfterSetContentView(this, R.color.red);
 
-        Toast.makeText(this, "dd2", Toast.LENGTH_LONG).show();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.home_activity_toolbar);
 
+        setSupportActionBar(toolbar);
+
+        Toast.makeText(this, "dd3", Toast.LENGTH_LONG).show();
 
     }
 
