@@ -6,7 +6,6 @@
 
 3 Support Android 4.4 and Android 5+
 
-<img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/1.png"  width="320" height="480"/>
 
 Usage
 =====
@@ -19,9 +18,14 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.MasonLiuChn:StatusBarColor:v1.0.3'
+    compile 'com.github.MasonLiuChn:StatusBarColor:v1.0.4'
 }
 ```
+
+<img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/1.png"  width="320" height="480"/>
+<img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/2.png"  width="320" height="480"/>
+<img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/3.png"  width="320" height="480"/>
+<img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/4.png"  width="320" height="480"/>
 ------
 Blog:http://blog.csdn.net/masonblog
 
