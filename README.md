@@ -4,7 +4,9 @@
 
 2 Can set status bar color
 
-3 Support Android 4.4 and Android 5+
+3 Can set navigation bar color
+
+4 Support Android 4.4 and Android 5+
 
 
 Usage
