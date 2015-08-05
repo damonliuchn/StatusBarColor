@@ -22,7 +22,6 @@ dependencies {
 }
 ```
 
-<img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/1.png"  width="320" height="480"/>
 <img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/2.png"  width="320" height="480"/>
 <img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/3.png"  width="320" height="480"/>
 <img src="https://github.com/MasonLiuChn/StatusBarColor/raw/master/doc/4.png"  width="320" height="480"/>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 /**
@@ -24,6 +25,7 @@ public class StatusBarColorUtil {
         setStatusBarColorAfterSetContentView(activity, activity.getResources().getColor(resource));
     }
 
+    //还要注意 toast 和 dialog 移位的问题
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static void setStatusBarColorAfterSetContentView(final Activity activity, int color) {
         try {
@@ -42,8 +44,18 @@ public class StatusBarColorUtil {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         setStatusBarColorResourceFromL(activity, color);
                     } else {
-                        View trueContent = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
-                        trueContent.setFitsSystemWindows(true);
+                        ViewGroup content = ((ViewGroup) activity.findViewById(android.R.id.content));
+                        View trueContent = content.getChildAt(0);
+                        if (trueContent.getId() != R.id.net_masonliu_statusbarcolor_addedframelayout) {
+                            FrameLayout frameLayout = new FrameLayout(activity);
+                            frameLayout.setId(R.id.net_masonliu_statusbarcolor_addedframelayout);
+                            content.addView(frameLayout);
+                            content.removeView(trueContent);
+                            frameLayout.addView(trueContent);
+                            frameLayout.setFitsSystemWindows(true);
+                        }
+                        //setFitsSystemWindows(true) 解决 scrollview 中 edittext 键盘 遮挡问题
+                        //trueContent.setFitsSystemWindows(true);
 
                         Window window = activity.getWindow();
                         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -51,6 +63,21 @@ public class StatusBarColorUtil {
                         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
                         tintManager.setStatusBarTintEnabled(true);
                         tintManager.setStatusBarTintColor(color);
+
+                        //解决设置 fitsystemwindow 后 viewpadding 消失的问题,但是这种方案有bug 就是当 content 变化后
+                        //truecontent 的 padding 又失效了，例如当弹出键盘后，所以才用了上边的方法：在 content 和 truecontent 中间再加一层 framlayout
+//                        content.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                            @Override
+//                            public void onGlobalLayout() {
+//                                content.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                                trueContent.setPadding(
+//                                        trueContent.getPaddingLeft() + left,
+//                                        trueContent.getPaddingTop() + top,
+//                                        trueContent.getPaddingRight() + right,
+//                                        trueContent.getPaddingBottom() + bottom);
+//                            }
+//                        });
+
                     }
                 }
             }
@@ -99,8 +126,16 @@ public class StatusBarColorUtil {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     setNavigationBarColorResourceFromL(activity, color);
                 } else {
-                    View trueContent = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
-                    trueContent.setFitsSystemWindows(true);
+                    ViewGroup content = ((ViewGroup) activity.findViewById(android.R.id.content));
+                    View trueContent = content.getChildAt(0);
+                    if (trueContent.getId() != R.id.net_masonliu_statusbarcolor_addedframelayout) {
+                        FrameLayout frameLayout = new FrameLayout(activity);
+                        frameLayout.setId(R.id.net_masonliu_statusbarcolor_addedframelayout);
+                        content.addView(frameLayout);
+                        content.removeView(trueContent);
+                        frameLayout.addView(trueContent);
+                        frameLayout.setFitsSystemWindows(true);
+                    }
 
                     Window window = activity.getWindow();
                     window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);

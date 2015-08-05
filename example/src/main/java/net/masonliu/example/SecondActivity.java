@@ -17,12 +17,18 @@ public class SecondActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_second);
 
-        StatusBarColorUtil.setStatusBarColorResourceAfterSetContentView(this, R.color.red);
-        StatusBarColorUtil.setNavigationBarColorResourceAfterSetContentView(this, R.color.red);
 
         Toast.makeText(this, "dd2", Toast.LENGTH_LONG).show();
 
 
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        StatusBarColorUtil.setStatusBarColorResourceAfterSetContentView(this, R.color.red);
+        //StatusBarColorUtil.setNavigationBarColorResourceAfterSetContentView(this, R.color.red);
     }
 
     @Override

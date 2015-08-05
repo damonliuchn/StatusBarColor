@@ -19,7 +19,7 @@ public class ThirdActivity extends ActionBarActivity {
 
 
         StatusBarColorUtil.setStatusBarColorResourceAfterSetContentView(this, R.color.red);
-        StatusBarColorUtil.setNavigationBarColorResourceAfterSetContentView(this, R.color.red);
+        //StatusBarColorUtil.setNavigationBarColorResourceAfterSetContentView(this, R.color.red);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.home_activity_toolbar);
 
