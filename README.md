@@ -8,6 +8,8 @@
 
 4 Support Android 4.4 and Android 5+
 
+5 Support ActionBar and Toolbar
+
 
 Usage
 =====
